@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card class="principalCard" color="dark">
+    <ion-card-header>
+        <ion-input size="large" label="Password" labelPlacement="floating" placeholder="********"></ion-input>
+        <ion-input size="large" label="Email" labelPlacement="floating" placeholder="email@gmail.com"></ion-input>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button id="open-modal" size="large" color="light" shape="round">Register</ion-button>
+      <ion-button size="large" color="light" shape="round">Login</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-modal trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-title id="titleRegister">Register</ion-title>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-card class="principalCard" color="dark">
+          <ion-card-header>
+            <ion-input size="large" label="Valid Password" labelPlacement="floating" placeholder="********"></ion-input>
+            <ion-input size="large" label="Password" labelPlacement="floating" placeholder="********"></ion-input>
+            <ion-input size="large" label="Email" labelPlacement="floating" placeholder="email@gmail.com"></ion-input>
+            <ion-input size="large" label="User Name" labelPlacement="floating" placeholder="Usuario123"></ion-input>
+          </ion-card-header>
+          <ion-card-content id="buttonsRegister">
+              <ion-button (click)="cancel()" shape="round" size="large" color="light">Cancel</ion-button>
+              <ion-button (click)="confirm()" shape="round" size="large" color="light" [strong]="true">Confirm</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
+
+
