@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { StorageService } from 'src/app/Services/storage.service';
+import { Router } from '@angular/router';
+import { VerificationsService } from 'src/app/Services/verifications.service';
 
 @Component({
   selector: 'app-login',
@@ -9,23 +12,70 @@ import { OverlayEventDetail } from '@ionic/core/components';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  //String Login
+  loginEmail:string= '';
+  loginPassword:string= '';
+
+  //String Register
+  registerUsername:String= '';
+  registerEmail:String= '';
+  registerPassword:String= '';
+  registerVerifyPassword:String= '';
+
+  constructor(private verify:VerificationsService, private storage:StorageService, private router:Router) { }
 
   ngOnInit() {
   }
 
   @ViewChild(IonModal) modal!: IonModal;
 
-  name: string = '';
-
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
-  confirm() {
+  //Registrar datos
+  registerConfirm() {
     //verificar acá el registro
-    this.modal.dismiss(this.name, 'confirm');
+    if (this.registerEmail == '') {
+      alert("Debe ingresar un correo");
+      return;
+    }
+    if (this.registerPassword == '') {
+      alert("Debe ingresar una contraseña");
+      return;
+    }
+    if (this.registerPassword != this.registerVerifyPassword) {
+      alert("Las contraseñas deben coincidir");
+      return;
+    }
+    var registerUser = [{
+      email:this.registerEmail,
+      password:this.registerPassword
+    }];
+
+    this.storage.guardarUsuario(registerUser);
+    alert("Usuario creado");
+
+    this.modal.dismiss(null, 'confirm');
   }
 
+  //Verificar datos
+  async login(){
+
+    const dates: any[] = await this.storage.obtenerUsuario();
+    const loginDates = dates[0];
+    const verifEmail: boolean = await this.verify.verifyEmail(this.loginEmail, loginDates.email);
+    const verifPassword: boolean = await this.verify.verifyPassword(this.loginPassword, loginDates.password);
+
+    if (verifEmail == false) {
+      return;
+    }else if (verifPassword == false) {
+      return;
+    }else{
+      alert("Ingreso correcto");
+      this.router.navigateByUrl("home");
+    }
+
+  }
 
 }
