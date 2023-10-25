@@ -9,22 +9,29 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 })
 export class HomePage {
 
+  resultado:string = '';
+
   constructor() {}
 
   async starScanner(){
-    // Check camera permission
-    // This is just a simple example, check out the better checks below
+
     await BarcodeScanner.checkPermission({ force: true });
 
-    // make background of WebView transparent
-    // note: if you are using ionic this might not be enough, check below
     BarcodeScanner.hideBackground();
 
-    const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
+    document.querySelector('body')!.classList.add('scanner-active');
 
-    // if the result has content
+    let result = await BarcodeScanner.startScan();
+
+    document.querySelector('body')!.classList.remove('scanner-active');
+
+
+    if (result.content !== undefined) {
+      this.resultado = result.content;
+    }
+
     if (result.hasContent) {
-      console.log(result.content); // log the raw scanned content
+      console.log(result.content);
     }
   };
 
