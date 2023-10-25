@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { Geolocation } from '@capacitor/geolocation';
 
 
 @Component({
@@ -10,6 +11,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 export class HomePage {
 
   resultado:string = '';
+  geolocationResult:string = '';
 
   constructor() {}
 
@@ -25,15 +27,24 @@ export class HomePage {
 
     document.querySelector('body')!.classList.remove('scanner-active');
 
+    const coordinates = await Geolocation.getCurrentPosition();
+    const geolocationData = {
+      latitude: coordinates.coords.latitude,
+      longitude: coordinates.coords.longitude,
+    };
+    this.geolocationResult = `Latitud: ${geolocationData.latitude}, Longitud: ${geolocationData.longitude}`;
+
 
     if (result.content !== undefined) {
       this.resultado = result.content;
+
     }
 
     if (result.hasContent) {
       console.log(result.content);
     }
   };
+
 
 
 }
