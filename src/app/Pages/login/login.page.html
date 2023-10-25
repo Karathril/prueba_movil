@@ -1,4 +1,5 @@
 <ion-content [fullscreen]="true">
+  <ion-title id="titleLogin"><b>Login</b></ion-title>
   <ion-card class="principalCard" color="dark">
     <ion-card-header>
       <ion-input [(ngModel)]="loginEmail" type="Email" size="large" label="Email" labelPlacement="floating" placeholder="email@gmail.com"></ion-input>
@@ -9,6 +10,7 @@
       <ion-button (click)="login()" size="large" color="light" shape="round">Login</ion-button>
     </ion-card-content>
   </ion-card>
+  <h3 (click)="recoverPassword()">¿Forgot password?</h3>
   <ion-modal trigger="open-modal">
     <ng-template>
       <ion-content class="ion-padding">
@@ -21,8 +23,8 @@
             <ion-input [(ngModel)]="registerVerifyPassword" type="Password" size="large" label="Verify Password" labelPlacement="floating" placeholder="********"></ion-input>
           </ion-card-header>
           <ion-card-content id="buttonsRegister">
-              <ion-button (click)="cancel()" shape="round" size="large" color="light">Cancel</ion-button>
-              <ion-button (click)="registerConfirm()" shape="round" size="large" color="light" [strong]="true">Confirm</ion-button>
+              <ion-button (click)="cancel()" shape="round" size="medium" color="light">Cancel</ion-button>
+              <ion-button (click)="registerConfirm()" shape="round" size="medium" color="light" [strong]="true">Confirm</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-content>

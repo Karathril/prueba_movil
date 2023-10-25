@@ -64,12 +64,9 @@ export class LoginPage implements OnInit {
 
     const dates: any[] = await this.storage.obtenerUsuario();
     const loginDates = dates[0];
-    const verifEmail: boolean = await this.verify.verifyEmail(this.loginEmail, loginDates.email);
-    const verifPassword: boolean = await this.verify.verifyPassword(this.loginPassword, loginDates.password);
+    const verifyDates: boolean = await this.verify.verifyDates(this.loginEmail, loginDates.email, this.loginPassword, loginDates.password);
 
-    if (verifEmail == false) {
-      return;
-    }else if (verifPassword == false) {
+    if (verifyDates == false) {
       return;
     }else{
       alert("Ingreso correcto");
@@ -78,4 +75,7 @@ export class LoginPage implements OnInit {
 
   }
 
+  recoverPassword(){
+    this.router.navigateByUrl("recover-password");
+  }
 }

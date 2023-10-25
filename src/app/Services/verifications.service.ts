@@ -7,7 +7,7 @@ export class VerificationsService {
 
   constructor() { }
 
-  async verifyEmail(email:string, loginEmail:string){
+  async verifyDates(email:string, loginEmail:string, password:string, loginPassword:string){
     if (email == '') {
       alert('Correo vacio');
       return false;
@@ -17,13 +17,7 @@ export class VerificationsService {
     }else if ( email != loginEmail){
       alert('Correo o contraseña incorrecta');
       return false;
-    }else {
-      return true;
-    }
-  }
-
-  async verifyPassword(password:string, loginPassword:string){
-    if (password == '') {
+    }if (password == '') {
       alert('Contraseña vacio');
       return false;
     }else if ( password != loginPassword){
@@ -31,7 +25,7 @@ export class VerificationsService {
       return false;
     }else {
       return true;
+
     }
   }
-
 }
