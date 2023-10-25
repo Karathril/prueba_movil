@@ -30,6 +30,7 @@ export class HomePage {
 
     document.querySelector('body')!.classList.remove('scanner-active');
 
+    //Geolocation
     const coordinates = await Geolocation.getCurrentPosition();
     const geolocationData = {
       latitude: coordinates.coords.latitude,
@@ -37,10 +38,22 @@ export class HomePage {
     };
     this.geolocationResult = `Latitud: ${geolocationData.latitude}, Longitud: ${geolocationData.longitude}`;
 
+    //Camera
+    const imageElement = document.getElementById("imageElement") as HTMLImageElement;
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+
+    var imageUrl = image.webPath;
+
+    if (imageUrl !== undefined) {
+      imageElement.src = imageUrl;
+    }
 
     if (result.content !== undefined) {
       this.resultado = result.content;
-
     }
 
     if (result.hasContent) {
@@ -49,29 +62,6 @@ export class HomePage {
   };
 
 
-
-  async takePicture() {
-    const imageElement = document.getElementById("imageElement") as HTMLImageElement;
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-
-    // image.webPath will contain a path that can be set as an image src.
-    // You can access the original file using image.path, which can be
-    // passed to the Filesystem API to read the raw data of the image,
-    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    var imageUrl = image.webPath;
-
-    // Can be set to the src of an image now
-    if (imageUrl !== undefined) {
-      imageElement.src = imageUrl;
-    } else {
-      // Manejar el caso en el que imageUrl es undefined, por ejemplo, establecer una imagen de reemplazo
-    }
-
-  };
 
 
 
