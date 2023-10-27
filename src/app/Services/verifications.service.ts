@@ -8,7 +8,8 @@ export class VerificationsService {
   constructor() { }
 
   async verifyDates(email:string, loginEmail:string, password:string, loginPassword:string){
-    if (email == '') {
+
+    if(email == '') {
       alert('Correo vacio');
       return false;
     }else if (!/@gmail\.com$/.test(email) && !/@duocuc\.cl$/.test(email)){

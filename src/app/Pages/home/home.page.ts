@@ -50,14 +50,11 @@ export class HomePage {
 
     if (imageUrl !== undefined) {
       imageElement.src = imageUrl;
+      imageElement.classList.remove("invisible");
     }
 
     if (result.content !== undefined) {
       this.resultado = result.content;
-    }
-
-    if (result.hasContent) {
-      console.log(result.content);
     }
   };
 
