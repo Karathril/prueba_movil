@@ -16,14 +16,14 @@ import { LocationService } from 'src/app/Services/location.service';
 export class LoginPage implements OnInit {
 
   //String Login
-  loginEmail:string= '';
+  loginUserName:string= '';
   loginPassword:string= '';
 
   //String Register
   registerUsername:string= '';
   registerEmail:string= '';
   registerPassword:string= '';
-  registerVerifyPassword:String= '';
+  registerVerifyPassword:string= '';
 
   //Regions and comunes
   regiones:Region[]=[];
@@ -31,6 +31,7 @@ export class LoginPage implements OnInit {
   regionSel:number = 0;
   comunaSel:number = 0;
   seleccionComuna:boolean = true;
+
 
   constructor(private verify:VerificationsService,
               private storage:StorageService,
@@ -61,50 +62,27 @@ export class LoginPage implements OnInit {
   }
 
   //Registrar datos
-  registerConfirm() {
-
-    if (this.registerUsername == '') {
-      alert("Nombre vacio");
+  async registerConfirm() {
+    const verifyRegister: boolean = await this.verify.verifyDatesRegister(this.registerUsername, this.registerEmail, this.registerPassword, this.registerVerifyPassword);
+    const regionSelect = this.regiones.find(region => region.id === this.regionSel);
+    const comunaSelect = this.comunas.find(comuna => comuna.id === this.comunaSel);
+    if (verifyRegister == false) {
       return;
-    }
-    if (/[0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(this.registerUsername)) {
-      alert('Nombre incorrecto');
-      return;
-    }
-    if (this.registerEmail == '') {
-      alert("Debe ingresar un correo");
-      return;
-    }
-    if (!/@gmail\.com$/.test(this.registerEmail) && !/@duocuc\.cl$/.test(this.registerEmail)) {
-      alert('Solo se aceptan @gmail.com o @duocuc.cl');
-      return;
-    }
-    if (this.registerPassword == '') {
-      alert("Debe ingresar una contraseña");
-      return;
-    }
-    if (!/[0-9]/.test(this.registerPassword) && !/[!@#$%&*()_+]/.test(this.registerPassword)){
-      alert('La contraseña debe tener almenos 1 número y 1 caracter especial de entre los siguientes (!@#$%&*()_+)');
-      return;
-    }
-    if (this.registerPassword != this.registerVerifyPassword) {
-      alert("Las contraseñas no coinciden");
-      return;
-    }
+    }else{
       var registerUser = [{
-      name:this.registerUsername,
-      email:this.registerEmail,
-      password:this.registerPassword
-      /* ,
-      region:this.regiones,   pendiente
-      commune:this.comunaSel */
-    }];
+        name:this.registerUsername,
+        email:this.registerEmail,
+        password:this.registerPassword,
+        region:regionSelect?.nombre,
+        commune:comunaSelect?.nombre
+      }];
 
-    this.storage.guardarUsuario(registerUser);
-    alert("Usuario creado");
-    console.log(registerUser);
+      this.storage.guardarUsuario(registerUser);
+      alert("Usuario creado");
+      console.log(registerUser);
 
-    this.modal.dismiss(null, 'confirm');
+      this.modal.dismiss(null, 'confirm');
+    }
   }
 
   //Verificar datos
@@ -112,12 +90,12 @@ export class LoginPage implements OnInit {
 
     const dates: any[] = await this.storage.obtenerUsuario();
     const loginDates = dates[0];
-    const verifyDates: boolean = await this.verify.verifyDates(this.loginEmail, loginDates.email, this.loginPassword, loginDates.password);
+    const verifyDates: boolean = await this.verify.verifyDates(this.loginUserName, loginDates.name, this.loginPassword, loginDates.password);
 
     if (verifyDates == false) {
       return;
     }else{
-      alert("Ingreso correcto");
+      alert("bienvenido "+loginDates.name);
       this.router.navigateByUrl("home");
     }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
 
 const storageUsuario = 'usuarioData';
+const storageRegister = 'registerData';
 @Injectable({
   providedIn: 'root'
 })
@@ -47,5 +48,32 @@ export class StorageService {
     }
   }
 
+  async guardarRegistro(register:any[]){
+    var registerStorage = await this.obtenerRegistro();
+
+    for (const i of registerStorage) {
+      if (i) {
+        register.push(i);
+      }
+    }
+    this.setItem(storageRegister,JSON.stringify(register));
+  }
+
+  async obtenerRegistro(){
+    const storageData = await this.getItem(storageRegister);
+
+    if (storageData == null) {
+      return [];
+    }
+
+    const data:any[] = JSON.parse(storageData);
+
+    if (data) {
+      return data;
+    }
+    else{
+      return [];
+    }
+  }
 }
 

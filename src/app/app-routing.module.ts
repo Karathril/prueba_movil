@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./Pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./Pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -19,8 +22,13 @@ const routes: Routes = [
     path: 'recover-password',
     loadChildren: () => import('./Pages/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
   },
+  {
+    path: '404', component: NotFoundComponent
+  },
+  {
+    path: '**', redirectTo: '404'
+  },
 ];
-
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })

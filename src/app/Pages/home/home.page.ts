@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType } from '@capacitor/camera';
-
+import { StorageService } from 'src/app/Services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -15,19 +15,14 @@ export class HomePage {
   geolocationResult:string = '';
 
 
-
-  constructor() {}
+  constructor(private storage:StorageService) {}
 
   async starScanner(){
 
     await BarcodeScanner.checkPermission({ force: true });
-
     BarcodeScanner.hideBackground();
-
     document.querySelector('body')!.classList.add('scanner-active');
-
     let result = await BarcodeScanner.startScan();
-
     document.querySelector('body')!.classList.remove('scanner-active');
 
     //Geolocation
@@ -56,6 +51,16 @@ export class HomePage {
     if (result.content !== undefined) {
       this.resultado = result.content;
     }
+
+    var registerRegister = [{
+      scan:this.resultado,
+      gps:this.geolocationResult,
+      photo:imageUrl
+    }];
+
+    this.storage.guardarUsuario(registerRegister);
+    alert("Registrado");
+    console.log(registerRegister);
   };
 
 

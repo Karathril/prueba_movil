@@ -2,7 +2,7 @@
   <ion-title id="titleLogin"><b>Login</b></ion-title>
   <ion-card class="principalCard" color="dark">
     <ion-card-header>
-      <ion-input [(ngModel)]="loginEmail" type="Email" size="large" label="Email" labelPlacement="floating" placeholder="email@gmail.com"></ion-input>
+      <ion-input [(ngModel)]="loginUserName" size="large" label="User Name" labelPlacement="floating" placeholder="Usuario123"></ion-input>
       <ion-input [(ngModel)]="loginPassword" type="Password" size="large" label="Password" labelPlacement="floating" placeholder="********"></ion-input>
     </ion-card-header>
     <ion-card-content>
@@ -24,7 +24,7 @@
             <ion-select (ionChange)="cargarComuna()" [(ngModel)]="regionSel"  label="Region" placeholder="Seleccione">
               <ion-select-option *ngFor="let i of regiones" [value]="i.id">{{i.nombre}}</ion-select-option>
             </ion-select>
-            <ion-select [disabled]="seleccionComuna" [(ngModel)]="regionSel"  label="Comuna" placeholder="Seleccione">
+            <ion-select [disabled]="seleccionComuna" [(ngModel)]="comunaSel"  label="Comuna" placeholder="Seleccione">
               <ion-select-option *ngFor="let i of comunas" [value]="i.id">{{i.nombre}}</ion-select-option>
             </ion-select>
           </ion-card-header>
