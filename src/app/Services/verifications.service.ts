@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
+import { AlertsService } from './alerts.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VerificationsService {
 
-  constructor() { }
+  constructor(private alerts:AlertsService) { }
 
   async verifyDates(name:string, loginName:string, password:string, loginPassword:string){
 
     if(name == '') {
-      alert('User Name vacio');
+      this.alerts.Alerts("User Name vacio","User Name");
       return false;
     }else if (/[0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(name)){
-      alert('User Name incorrecto');
+      this.alerts.Alerts("User Name incorrecto","User Name");
       return false;
     }else if (name != loginName){
-      alert('User Name o contraseña incorrecta');
+      this.alerts.Alerts("User Name o contraseña incorrecta","User Name");
       return false;
     }if (password == '') {
-      alert('Contraseña vacio');
+      this.alerts.Alerts("Contraseña vacio","Contraseña");
       return false;
     }else if (password != loginPassword){
-      alert('Correo o contraseña incorrecta');
+      this.alerts.Alerts("Correo o contraseña incorrecta","Contraseña");
       return false;
     }else {
       return true;
@@ -32,25 +33,25 @@ export class VerificationsService {
 
   async verifyDatesRegister (registerName:string, registerEmail:string, registerPassword:string, registerVerifyPassword:string, ){
     if (registerName == '') {
-      alert("Nombre vacio");
+      this.alerts.Alerts("Nombre vacio","Nombre");
       return false;
     }else if (/[0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(registerName)) {
-      alert('Nombre incorrecto');
+      this.alerts.Alerts("Nombre incorrecto","Nombre");
       return false;
     }else if (registerEmail == '') {
-      alert("Debe ingresar un correo");
+      this.alerts.Alerts("Debe ingresar un correo","correo");
       return false;
     }else if (!/@gmail\.com$/.test(registerEmail) && !/@duocuc\.cl$/.test(registerEmail)) {
-      alert('Solo se aceptan @gmail.com o @duocuc.cl');
+      this.alerts.Alerts("Solo se aceptan @gmail.com o @duocuc.cl","correo");
       return false;
     }else if (registerPassword == '') {
-      alert("Debe ingresar una contraseña");
+      this.alerts.Alerts("Debe ingresar una contraseña","contraseña");
       return false;
     }else if (!/[0-9]/.test(registerPassword) && !/[!@#$%&*()_+]/.test(registerPassword)){
-      alert('La contraseña debe tener almenos 1 número y 1 caracter especial de entre los siguientes (!@#$%&*()_+)');
+      this.alerts.Alerts("La contraseña debe tener almenos 1 número y 1 caracter especial de entre los siguientes (!@#$%&*()_+)","contraseña");
       return false;
     }else if (registerPassword != registerVerifyPassword) {
-      alert("Las contraseñas no coinciden");
+      this.alerts.Alerts("Las contraseñas no coinciden","contraseña");
       return false;
     }else {
       return true;
@@ -60,7 +61,7 @@ export class VerificationsService {
 
   async verifyRecover(ecoverUsername:string, name:string){
     if (ecoverUsername != name){
-      alert('El User no corresponde');
+      this.alerts.Alerts("El User no corresponde","User");
       return false;
     }else{
       return true;

@@ -1,0 +1,15 @@
+<ion-content>
+  <ion-button size="large" expand="full" shape="round" color="danger" (click)="generateCards()">Cargar datos</ion-button>
+  <ion-button size="large" expand="full" shape="round" color="danger" (click)="backHome()">Back Home</ion-button>
+  <ion-card *ngFor="let card of cards">
+    <ion-card-header>
+      <ion-card-title>{{ card.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label>Ubicación:</ion-label>
+      <ion-text>{{ card.email }}</ion-text>
+      <ion-label>Selfie:</ion-label>
+      <img [src]="card.imagen" alt="User Image" />
+    </ion-card-content>
+  </ion-card>
+</ion-content>

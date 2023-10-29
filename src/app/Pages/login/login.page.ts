@@ -6,6 +6,8 @@ import { VerificationsService } from 'src/app/Services/verifications.service';
 import { Region } from 'src/app/Models/region';
 import { Comuna } from 'src/app/Models/comuna';
 import { LocationService } from 'src/app/Services/location.service';
+import { Platform } from '@ionic/angular';
+import { AlertsService } from 'src/app/Services/alerts.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +38,9 @@ export class LoginPage implements OnInit {
   constructor(private verify:VerificationsService,
               private storage:StorageService,
               private router:Router,
-              private locationService:LocationService)
+              private locationService:LocationService,
+              private platform: Platform,
+              private alerts:AlertsService)
               { }
 
   ngOnInit() {
@@ -78,7 +82,7 @@ export class LoginPage implements OnInit {
       }];
 
       this.storage.guardarUsuario(registerUser);
-      alert("Usuario creado");
+      this.alerts.Alerts("Usuario creado con exito","");
       console.log(registerUser);
 
       this.modal.dismiss(null, 'confirm');
@@ -95,7 +99,7 @@ export class LoginPage implements OnInit {
     if (verifyDates == false) {
       return;
     }else{
-      alert("bienvenido "+loginDates.name);
+      this.alerts.Alerts(loginDates.name,"Bienvenido");
       this.router.navigateByUrl("home");
     }
 
@@ -104,4 +108,5 @@ export class LoginPage implements OnInit {
   recoverPassword(){
     this.router.navigateByUrl("recover-password");
   }
+
 }

@@ -23,11 +23,16 @@ const routes: Routes = [
     loadChildren: () => import('./Pages/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
   },
   {
+    path: 'register-scan',
+    loadChildren: () => import('./Pages/register-scan/register-scan.module').then( m => m.RegisterScanPageModule)
+  },
+  {
     path: '404', component: NotFoundComponent
   },
   {
     path: '**', redirectTo: '404'
   },
+
 ];
 @NgModule({
   imports: [
