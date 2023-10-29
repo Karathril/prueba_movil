@@ -1,30 +1,36 @@
 <ion-content [fullscreen]="true">
+  <ion-title id="titleLogin"><b>Login</b></ion-title>
   <ion-card class="principalCard" color="dark">
     <ion-card-header>
+      <ion-input [(ngModel)]="loginUserName" size="large" label="User Name" labelPlacement="floating" placeholder="Usuario123"></ion-input>
       <ion-input [(ngModel)]="loginPassword" type="Password" size="large" label="Password" labelPlacement="floating" placeholder="********"></ion-input>
-      <ion-input [(ngModel)]="loginEmail" type="Email" size="large" label="Email" labelPlacement="floating" placeholder="email@gmail.com"></ion-input>
     </ion-card-header>
     <ion-card-content>
       <ion-button id="open-modal" size="large" color="light" shape="round">Register</ion-button>
       <ion-button (click)="login()" size="large" color="light" shape="round">Login</ion-button>
     </ion-card-content>
   </ion-card>
+  <h3 (click)="recoverPassword()">¿Forgot password?</h3>
   <ion-modal trigger="open-modal">
     <ng-template>
-      <ion-header>
-        <ion-title id="titleRegister">Register</ion-title>
-      </ion-header>
       <ion-content class="ion-padding">
+        <ion-title id="titleRegister"><b>Register</b></ion-title>
         <ion-card class="principalCard" color="dark">
           <ion-card-header>
-            <ion-input [(ngModel)]="registerVerifyPassword" type="Password" size="large" label="Verify Password" labelPlacement="floating" placeholder="********"></ion-input>
-            <ion-input [(ngModel)]="registerPassword" type="Password" size="large" label="Password" labelPlacement="floating" placeholder="********"></ion-input>
-            <ion-input [(ngModel)]="registerEmail" type="Email" size="large" label="Email" labelPlacement="floating" placeholder="email@gmail.com"></ion-input>
             <ion-input [(ngModel)]="registerUsername" size="large" label="User Name" labelPlacement="floating" placeholder="Usuario123"></ion-input>
+            <ion-input [(ngModel)]="registerEmail" type="Email" size="large" label="Email" labelPlacement="floating" placeholder="email@gmail.com"></ion-input>
+            <ion-input [(ngModel)]="registerPassword" type="Password" size="large" label="Password" labelPlacement="floating" placeholder="********"></ion-input>
+            <ion-input [(ngModel)]="registerVerifyPassword" type="Password" size="large" label="Verify Password" labelPlacement="floating" placeholder="********"></ion-input>
+            <ion-select (ionChange)="cargarComuna()" [(ngModel)]="regionSel"  label="Region" placeholder="Seleccione">
+              <ion-select-option *ngFor="let i of regiones" [value]="i.id">{{i.nombre}}</ion-select-option>
+            </ion-select>
+            <ion-select [disabled]="seleccionComuna" [(ngModel)]="comunaSel"  label="Comuna" placeholder="Seleccione">
+              <ion-select-option *ngFor="let i of comunas" [value]="i.id">{{i.nombre}}</ion-select-option>
+            </ion-select>
           </ion-card-header>
           <ion-card-content id="buttonsRegister">
-              <ion-button (click)="cancel()" shape="round" size="large" color="light">Cancel</ion-button>
-              <ion-button (click)="registerConfirm()" shape="round" size="large" color="light" [strong]="true">Confirm</ion-button>
+              <ion-button (click)="cancel()" shape="round" size="medium" color="light">Cancel</ion-button>
+              <ion-button (click)="registerConfirm()" shape="round" size="medium" color="light" [strong]="true">Confirm</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-content>
